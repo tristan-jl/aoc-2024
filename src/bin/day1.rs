@@ -28,16 +28,13 @@ fn part1(input: &str) -> u32 {
     l.sort_unstable();
     r.sort_unstable();
 
-    l.into_iter()
-        .zip(r.into_iter())
-        .map(|(li, ri)| li.abs_diff(ri))
-        .sum()
+    l.into_iter().zip(r).map(|(li, ri)| li.abs_diff(ri)).sum()
 }
 
 fn part2(input: &str) -> u32 {
     let (l, r) = parse_input(input);
 
-    let mut counts: HashMap<u32, u32> = HashMap::with_capacity(l.len() as usize);
+    let mut counts: HashMap<u32, u32> = HashMap::with_capacity(l.len());
 
     fn count_occurences(v: &Vec<u32>, t: u32) -> u32 {
         let mut count = 0;

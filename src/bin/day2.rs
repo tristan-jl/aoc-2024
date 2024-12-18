@@ -5,7 +5,6 @@ fn parse_input(input: &str) -> Vec<Vec<u32>> {
         .lines()
         .map(|i| {
             i.split_whitespace()
-                .into_iter()
                 .map(|i| i.parse().expect("couldn't parse number"))
                 .collect()
         })
@@ -14,15 +13,15 @@ fn parse_input(input: &str) -> Vec<Vec<u32>> {
 
 fn check_report(report: &[u32]) -> bool {
     let is_increase = report[1] > report[0];
-    let mut it = report.into_iter();
+    let mut it = report.iter();
     let mut last_num = it.next().expect("should have at least 1 number in report");
 
     for i in it {
-        if i == last_num {
-            return false;
-        } else if is_increase && i < last_num || !is_increase && i > last_num {
-            return false;
-        } else if last_num.abs_diff(*i) > 3 {
+        if i == last_num
+            || is_increase && i < last_num
+            || !is_increase && i > last_num
+            || last_num.abs_diff(*i) > 3
+        {
             return false;
         }
         last_num = i
@@ -38,7 +37,7 @@ fn part1(input: &str) -> u32 {
 }
 
 fn check_with_rm(r: &[u32]) -> bool {
-    if check_report(&r) {
+    if check_report(r) {
         return true;
     }
 
@@ -56,7 +55,7 @@ fn check_with_rm(r: &[u32]) -> bool {
 fn part2(input: &str) -> u32 {
     parse_input(input)
         .into_iter()
-        .map(|mut r| check_with_rm(&mut r) as u32)
+        .map(|r| check_with_rm(&r) as u32)
         .sum()
 }
 
